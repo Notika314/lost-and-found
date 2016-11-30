@@ -19,3 +19,14 @@
 //= require react
 //= require react_ujs
 //= require components
+$( document ).ready(function() {
+    $("#show_signup").click(function(e) {
+    	$("#signup-form").show();
+    	$(this).hide();
+    });
+    $("#show_login").click(function(e) {
+    	$("#login-form").show();
+    	$(this).hide();
+    });
+
+})

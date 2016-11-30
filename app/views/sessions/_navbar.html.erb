@@ -1,0 +1,49 @@
+<button id="show_signup">Signup</button>
+<div id="signup-form">
+	<%= form_for :user,url: "/users/create" do |f| %>
+		<div class="field">
+			<%= f.label :username %>
+			<%= f.text_field :username %>
+		</div>
+		<div class="field">
+			<%= f.label :password %>
+			<%= f.text_field :password %>
+		</div>
+		<div class="field">
+			<%= f.label :"confirm password" %>
+			<%= f.text_field :"confirm password" %>
+		</div>
+		<div class="field">
+			<%= f.label :email %>
+			<%= f.text_field :email %>
+		</div>
+		<div class="field">
+			<%= f.label :phone %>
+			<%= f.text_field :phone %>
+		</div>
+		<div class="field">
+			<%= f.submit "SIGN UP!" %>
+		</div>
+	<% end %>
+</div>
+<button id="show_login">Login</button>
+<div id="login-form">
+	<%= form_for :user, url: "/sessions/login" do |f| %>
+		<div class="field">
+			<%= f.label :username %>
+			<%= f.text_field :username %>
+		</div>
+		<div class="field">
+			<%= f.label :password %>
+			<%= f.text_field :password %>
+		</div>
+		<div class="field">
+			<%= f.submit "LOG IN!" %>
+		</div>
+	<% end %>
+</div>
+<div id="logout">
+
+<button><%= link_to("Sign out",controller: "sessions",
+		action: "logout" ) %></button>
+</div>
