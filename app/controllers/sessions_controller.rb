@@ -4,10 +4,12 @@ class SessionsController < ApplicationController
 		redirect_to "/"
 	end
 	def login
-		@current_user = User.find_by(username: params[:user][:username])
-		session[:user_id]=@current_user.id
-		if @current_user
-			redirect_to "/items/show"
+			user = User.find_by(username: params[:user][:username])
+		if (user && user.authenticate(params[:user][:password]))
+			@current_user = user
+			session[:user_id]=@current_user.id
+			redirect_to "/items/index"
+
 		else 
 			redirect_to "/"
 		end

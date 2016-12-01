@@ -1,0 +1,30 @@
+<%= form_for :item, url: "/items/create" do |f| %>
+	<button id="hide-item-form">Hide</button>
+	<div class="field">
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<%= f.label :description %>
+		<%= f.text_field :description %>
+	</div>
+	<div class="field">
+		<%= f.label :location %>
+		<%= f.text_field :location %>
+	</div>
+	<div class="field">
+		<%= f.label :date %>
+		<%= f.date_field :date %>
+	</div>
+	<div class="field">
+		<%= f.hidden_field :"user_id", :value => session[:user_id] %>
+	</div>
+	<div class="field">
+		<%= f.label :status %>
+		<%= f.select :status, ["lost","found"] %>
+	</div>
+	<div class="field">
+		<%= f.submit "Create item" %>
+	</div>
+<% end %>
+

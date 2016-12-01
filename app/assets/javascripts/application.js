@@ -28,5 +28,13 @@ $( document ).ready(function() {
     	$("#login-form").show();
     	$(this).hide();
     });
+    $("#add-item").click(function(e) {
+    	$("#new-item-form").show();
+    	$(this).hide();
+    });
+    $("#hide-item-form").click(function(e) {
+        // e.preventDefault();
+        $(this).parent.hide();
+    })
 
 })

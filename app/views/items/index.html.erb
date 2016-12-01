@@ -1,2 +1,39 @@
 <h1>Hello from items index aaaaaa</h1>
 <%= render 'sessions/navbar' %>
+<% if @items.size > 0 %>
+	<h2>Items:</h2>
+	<table id="items-table">
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Location</th>
+		<th>Date</th>
+		<th>Status(Lost/Find)</th>
+		<th>Delete</th>
+	</tr>
+	<% @items.each do |item| %>
+	<tr>
+	<td><%= item.name %></td>
+	<td class="limit-size"><%= item.description %></td>
+	<td><%= item.location %></td>
+	<td><%= item.date %></td>
+	<td><%= item.status %></td>
+	<td><% if item.user_id == session[:user_id] %>
+			<%= form_for :item, :html => { :method => :delete, :remote => true } do |f| %>
+			<%= f.hidden_field :"id", :value => item.id %>
+			<%= f.submit :value => "Delete" %>
+			<% end %>
+		<% else %>
+		<span style="background-color: red"></span>
+		<% end %>
+	</td>
+
+	</tr>
+	<% end %>
+	</table>
+<% end %>
+
+<button id="add-item">New Item</button>
+<div id="new-item-form">
+<%= render 'form' %>
+</div>

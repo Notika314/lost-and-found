@@ -13,6 +13,19 @@
  *= require_tree .
  *= require_self
  */
+ #items-table {
+ 	background-color: #264d73;
+ 	color: #86592d;
+ }
+td {
+	border: 1px dotted grey;
+	background-color: #85adad;
+}
+
+ .limit-size {
+ 	max-width: 300px;
+ 	overflow: scroll;
+ }
 #authen {
     list-style-type: none;
     margin: 0;
@@ -22,5 +35,13 @@ li {
 	display: inline;
 }
 #signup-form, #login-form {
+	display: none;
+}
+#new-item-form {
+	border: 4px solid red;
+	border-radius: 7px;
+	background-color: yellow;
+	width: 20%;
+	padding: 20px;
 	display: none;
 }
