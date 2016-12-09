@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 			@user = User.new(user_params)
 			if @user.save
 				session[:user_id] = @user.id
-				redirect_to "/items/index"
+				redirect_to "/items"
 				# redirect_to "/"
 			else
 				redirect_to "/"
