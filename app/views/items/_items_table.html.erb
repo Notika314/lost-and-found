@@ -1,0 +1,38 @@
+<h2><%= status %> items count: <%= items.size %></h2>
+<% if items.size > 0 %>
+	<table class="items-table">
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Location</th>
+		<th>Date</th>
+		<th>Comments</th>
+		<th></th>
+		<th>Delete</th>
+	</tr>
+	<% items.each do |item| %>
+	<tr>
+		<td><%= item.name %></td>
+		<td class="limit-size"><%= item.description %></td>
+		<td><%= item.location %></td>
+		<td><%= item.date %></td>
+		<td class="coms"><a href="#" class="comments-show"><%= item.comments.count %> comments</a>
+			<div class="comments-index"><%= render partial: "comments/index", locals: { comments: item.comments} %>
+			</div>
+		</td>
+		<td><a class="show-comment-form" id="item-#{item.id}" href="items/<%= item.id %>/comments/new">Leave comment</a>
+		<div class="hidden comment-form"><%= render partial: "comments/form" ,locals: { item_id: item.id } %><div>
+		</td>
+		<td><% if item.user_id == session[:user_id] %>
+				<%= form_for :item, :html => { :method => :delete } do |f| %>
+				<%= f.hidden_field :"id", :value => item.id %>
+				<%= f.submit :value => "Delete" %>
+				<% end %>
+			<% else %>
+			<span style="background-color: red"></span>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+	</table>
+<% end %>

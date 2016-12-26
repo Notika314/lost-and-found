@@ -13,6 +13,14 @@
  *= require_tree .
  *= require_self
  */
+ .comments-index {
+ 	max-height: 80px;
+ 	width: 190px;
+ 	overflow: scroll;
+ 	display: none;
+ 	background-color: white;
+ 	border: 4px solid blue;
+ }
  #all-items {
  	max-width: 1500px;
  	overflow: scroll;
@@ -22,12 +30,29 @@
  	float: left;
  	margin: 10px;
  }
+ .items-column {
+ 	position: relative;
+ }
  .items-table {
  	z-index: 0.5;
  	max-width: 600px;
  	overflow: scroll;
  	background-color: #264d73;
  	color: #86592d;
+ }
+ .comment-form {
+ 	background-color:red;
+    width:290px;
+    height:250px;
+    position:absolute;
+    left: 15px;
+    top:10px;
+ }
+ .field {
+ 	margin: 10px;
+ }
+ .hidden {
+ 	display: none;
  }
  .new-comment-partial {
  	width: 50%;

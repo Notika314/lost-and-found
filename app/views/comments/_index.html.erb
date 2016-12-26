@@ -1,0 +1,5 @@
+<% comments.each do |comment| %>
+	<p><%= comment.body %><br>
+	<b><%= comment.user.username %></b></p>
+<% end %>
+<button class="hide-comments">Hide</button>

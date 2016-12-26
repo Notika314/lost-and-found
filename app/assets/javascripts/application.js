@@ -19,6 +19,9 @@
 //= require react
 //= require react_ujs
 //= require components
+//= require react
+//= require react_ujs
+//= require components
 $( document ).ready(function() {
     // $(".show-comment-form").click(function(e) {
     //     e.preventDefault();
@@ -39,19 +42,73 @@ $( document ).ready(function() {
     	$(this).hide();
     });
     $("#hide-item-form").click(function(e) {
-        // e.preventDefault();
-        $(this).parent.hide();
+        e.preventDefault();
+        $("#add-item").show();
+        $($($(this).parent()[0]).parent()[0]).hide();
     });
     $("#api-call").click(function(e) {
         e.preventDefault();
         var that = this;
         $.ajax({
             url: "/items/external_api",
-            type: "get"
+            method: "get"
         }).done(function(response) {
             console.log(response);
             $(that).parent().append(response);
         })
+    });
+    $("#keyword-search").click(function(e) {
+        $("#search-form").toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    })
+    $(".show-comment-form").click(function(e) {
+        e.preventDefault();
+        var form = $($(this).parent()[0]).find(".comment-form")[0];
+        $(form).removeClass("hidden");
+
+    });
+    // $(".keyword-search").submit(function(e) {
+    //     $("#search-form").toggleClass("hidden");
+    //     $("#keyword-search").toggleClass("hidden");
+    //     e.preventDefault();
+    //     var input = $(".keyword-search input[type='text']").val()
+    //     $.ajax({
+    //         url: "/items/search_by_keyword",
+    //         method: "post",
+    //         data: { keyword: input }
+    //     }).done(function(response) {
+    //         console.log($(".keyword-search input[type='submit'")[0]);
+    //         $(".keyword-search input[type='submit'").prop("disabled", false);
+    //         if (response["keyword"]) {
+    //             var keyword = $("#if-kw")[0];
+    //             var art = $(keyword).find("h2")[0];
+    //             $(art).text(response["keyword"]);
+    //             $(keyword).show();
+    //         }
+    //         console.log(response);
+    //     })
+    //     console.log(e.target);
+    // })
+    $(".hide-comment-form").click(function(e) {
+        var form = $(this).parent()[0];
+        debugger;
+        $(form).addClass("hidden");
+    })
+    $(".comments-show").click(function(e) {
+        e.preventDefault();
+        var paren = $(this).parent()[0];
+        var comments = $(paren).find(".comments-index");
+        var button = $(paren).find(".comments-show");
+        $(comments).show();
+        $(button).hide();
+        
+    });
+    $(".hide-comments").click(function(e) {
+        var paren = $(this).closest(".coms");
+        var comments = $(paren).find(".comments-index");
+        var button = $(paren).find(".comments-show");
+        $(comments).hide();
+        $(button).show(); 
     })
 
 })

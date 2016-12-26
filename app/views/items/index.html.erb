@@ -3,88 +3,44 @@
 	<h2 style="color: red; text-align: center">Welcome, <%= @current_user.username %></h2>
 <% end %>
 <%= render 'sessions/navbar' %>
-<div id="all-items">
-	<div class="items-column" id="lost-items">
-		
-		<h2>Lost items count: <%= @lost_items.size %></h2>
-		<% if @lost_items.size > 0 %>
-			<h2>Lost items:</h2>
-			<table class="items-table">
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Location</th>
-				<th>Date</th>
-				<th>Comments</th>
-				<th></th>
-				<th>Delete</th>
-			</tr>
-			<% @lost_items.each do |item| %>
-			<tr>
-				<td><%= item.name %></td>
-				<td class="limit-size"><%= item.description %></td>
-				<td><%= item.location %></td>
-				<td><%= item.date %></td>
-				<td><%= item.comments.count %></td>
-				<td><a class="show-comment-form" id="item-#{item.id}" href="items/<%= item.id %>/comments/new">Leave comment</a></td>
-				<td><% if item.user_id == session[:user_id] %>
-						<%= form_for :item, :html => { :method => :delete } do |f| %>
-						<%= f.hidden_field :"id", :value => item.id %>
-						<%= f.submit :value => "Delete" %>
-						<% end %>
-					<% else %>
-					<span style="background-color: red"></span>
-					<% end %>
-				</td>
-			</tr>
+<%= react_component 'Appl' %>
+<button><a href="/items">Home</a></button>
+<% if @current_user %>
+<% if @keyword %>
+	<h2>Searching by keyword: <span style="color: red"><%= @keyword %></span>.You can try also: <span style="color: red"><%= @keyword.upcase %></span> or <span style="color: red"><%= @keyword.capitalize %></span>.</h2>
+<% end %>
+	<div id="search-by-keyword">
+		<button id="keyword-search">Search by keyword...</button>
+		<div id="search-form" class="hidden">
+			<%= form_tag("/items/search_by_keyword", method: "get", :class => "keyword-search") do %>
+			  <%= label_tag(:keyword, "Search for:") %>
+			  <%= text_field_tag(:keyword) %>
+			  <input type="submit" value="Search" />
 			<% end %>
-			</table>
-		<% end %>
-	</div>
-	<div class="items-column" id="found-items">
-		<div class="new-comment-partial">
-			<%= render "comments/new" %>
 		</div>
-		<h2>Found items count: <%= @found_items.size %></h2>
-		<% if @found_items.size > 0 %>
-			<h2>Found items:</h2>
-			<table class="items-table">
-			<tr>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Location</th>
-				<th>Date</th>
-				<th>Comments</th>
-				<th></th>
-				<th>Delete</th>
-			</tr>
-			<% @found_items.each do |item| %>
-			<tr>
-				<td><%= item.name %></td>
-				<td class="limit-size"><%= item.description %></td>
-				<td><%= item.location %></td>
-				<td><%= item.date %></td>
-				<td><%= item.comments.count %></td>
-				<td><a class="show-comment-form" id="item-#{item.id}" href="items/<%= item.id %>/comments/new">Leave comment</a></td>
-				<td><% if item.user_id == session[:user_id] %>
-						<%= form_for :item, :html => { :method => :delete } do |f| %>
-						<%= f.hidden_field :"id", :value => item.id %>
-						<%= f.submit :value => "Delete" %>
-						<% end %>
-					<% else %>
-					<span style="background-color: red"></span>
-					<% end %>
-				</td>
-			</tr>
-			<% end %>
-			</table>
-		<% end %>
 	</div>
-</div>
-<button id="add-item">New Item</button>
-<div id="new-item-form">
-<%= render 'form' %>
-</div>
-<div>
-	<button id="api-call">Make API call</button>
-</div>
+	<div id="all-items">
+		<div class="items-column" id="lost-items">
+			<%= render partial: "items/items_table", locals: { status: "Lost" , items: @lost_items} %>
+			<div class="new-comment-partial" >
+				<%= render "comments/new" %>
+			</div>
+		</div>
+
+		<div class="items-column" id="found-items">
+			<%= render partial: "items/items_table", locals: { status: "Found" , items: @found_items} %>
+			<div class="new-comment-partial" >
+				<%= render "comments/new" %>
+			</div>
+		</div>
+	</div>
+	<button id="add-item">New Item</button>
+	<div id="new-item-form">
+		<%= render 'form' %>
+	</div>
+	<div>
+		<button id="api-call">Make API call</button>
+	</div>
+<% else %>
+	<h2>You need to log in to see all items!</h2>
+<% end %>
